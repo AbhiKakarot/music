@@ -1,0 +1,33 @@
+{% extends 'music/base.html'  %}
+{% block title %}Song Details{% endblock %}
+{% block body %}
+
+{% if all_songs %}
+<h3 style="font-family:'Satisfy',cursive; margin-left:20px;">Here are all your songs</h3>
+<ul>
+{% for song in all_songs %}
+  <li>
+<a target="_blank" href="{{ song.song_file.url }}">
+<button class="btn btn-success btn-xs">
+<span class="glyphicon glyphicon-play"></span>&nbsp;Play
+</button>
+</a>
+{{ song.song_title }}</li>
+<br>
+{% endfor %}
+</ul>
+{% else %}
+   <h3>you dont have any songs</h3>
+{% endif %}
+<span style="margin-left:35px;"><a href="{% url 'music:song-add' %}"><button class="btn btn-default">Add Songs</button></a>
+</span>
+
+{% endblock %}
+
+
+
+<a target="_blank" href="{{ song.audio_file.url }}">
+                                            <button type="button" class="btn btn-success btn-xs">
+                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                            </button>
+                                        </a>
