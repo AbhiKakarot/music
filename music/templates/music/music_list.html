@@ -19,15 +19,8 @@
 {% else %}
    <h3>you dont have any songs</h3>
 {% endif %}
-<span style="margin-left:35px;"><a href="{% url 'music:song-add' %}"><button class="btn btn-default">Add Songs</button></a>
-</span>
 
 {% endblock %}
 
 
 
-<a target="_blank" href="{{ song.audio_file.url }}">
-                                            <button type="button" class="btn btn-success btn-xs">
-                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play
-                                            </button>
-                                        </a>

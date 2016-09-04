@@ -19,10 +19,9 @@ class Song(models.Model):
       album = models.ForeignKey(Album, on_delete=models.CASCADE)
       song_file=models.FileField(default='')
       song_title = models.CharField(max_length=250)
+      
       def get_absolute_url(self):
-          return reverse('music:detail',kwargs={'pk':self.pk})
-      #def get_absolute_url(self):
-       #   return reverse('music:music_list')
+          return reverse('music:music_list')
 
       def __str__(self):
           return self.song_title

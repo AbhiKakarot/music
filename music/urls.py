@@ -10,7 +10,7 @@ urlpatterns = [
 
            url(r'^music_list/$',views.SongsView.as_view(), name='music_list'),
 
-            url(r'^song-add/$', views.SongCreate.as_view(), name='song-add'),
+            url(r'^(?P<album_id>[0-9]+)/song-add/$', views.create_song, name='song-add'),
            # /music/album/add
 	   url(r'album/add/$',views.AlbumCreate.as_view(),name='album-add'), 
           

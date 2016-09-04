@@ -1,11 +1,13 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
-from .forms import UserForm
+from .forms import UserForm,SongForm
 from .models import Album, Song
+
+AUDIO_FILE_TYPES = ['wav', 'mp3', 'ogg']
 
 class IndexView(generic.ListView):
       template_name= 'music/index.html'
@@ -36,10 +38,32 @@ class AlbumDelete(DeleteView):
       model=Album
       success_url = reverse_lazy('music:index')
 
-class SongCreate(CreateView):
-      model=Song
-      fields =['album','song_file', 'song_title']
-      
+
+def create_song(request, album_id):
+    form = SongForm(request.POST or None, request.FILES or None)
+    album = get_object_or_404(Album, pk=album_id)
+    if form.is_valid():
+        albums_songs = album.song_set.all()
+        for s in albums_songs:
+            if s.song_title == form.cleaned_data.get("song_title"):
+                context = {
+                    'album': album,
+                    'form': form,
+                    'error_message': 'You already added that song',
+                }
+                return render(request, 'music/song_form.html', context)
+        song = form.save(commit=False)
+        song.album = album
+        song.save()
+        return render(request, 'music/detail.html', {'album': album})
+    context = {
+        'album': album,
+        'form': form,
+    }
+    return render(request, 'music/song_form.html', context)
+
+
+
 class UserFormView(View):
       form_class=UserForm
       template_name= 'music/registration_form.html'
