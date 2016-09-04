@@ -1,1 +1,3 @@
 This is my first project.
+It is based on Django-python's Framework
+it is a music project which just adds albums and songs and also play songs. There are some more functionalities to be added , i am working on that ;)
