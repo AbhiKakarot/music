@@ -3,14 +3,14 @@ from . import views
 app_name='music'
 urlpatterns = [
            #/music/
-           url(r'^$', views.IndexView.as_view(), name='index'),
+           url(r'^$', views.index, name='index'),
            url(r'^register/$', views.UserFormView.as_view(), name='register'),
            url(r'^login/$', views.login_user, name='login'),
            url(r'^logout/$', views.logout_user, name='logout'),
           # /music/<album_id>/
            url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
 
-           url(r'^music_list/$',views.SongsView.as_view(), name='music_list'),
+           url(r'^music_list/$',views.SongsView, name='music_list'),
 
             url(r'^(?P<album_id>[0-9]+)/song-add/$', views.create_song, name='song-add'),
            # /music/album/add

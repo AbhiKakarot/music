@@ -1,8 +1,8 @@
 {% extends 'music/base.html'  %}
-
+{% block albums_active %}active{% endblock %}
 {% block body %}
 {% if all_albums   %}
-    <h3 style="font-family:'Satisfy',cursive; margin-left:20px;">Here are all your albums</h3>
+    <h3 style="font-family:'Satisfy',cursive; margin-left:20px;">Here are all {{ user.username }}'s albums</h3>
 
    {% for album in all_albums %}
 <div class="col-sm-4 col-lg-2">
@@ -29,7 +29,7 @@
    {% endfor %}
 </ul>
 {% else %}
-   <h3>you dont have any albums</h3>
+   <h3 style="font-family:'Satisfy',cursive; margin-left:20px;">you dont have any albums</h3>
 {% endif %}
 {% endblock %}
 

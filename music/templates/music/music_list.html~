@@ -42,7 +42,7 @@
 </table>
 </div></div></div></div>
 {% else %}
-   <h3 style="font-family:'Satisfy',cursive; margin-left:20px;">you dont have any songs</h3>
+   <h3 style="font-family:'Satisfy',cursive; margin-left:20px;">You dont have any songs</h3>
 {% endif %}
 
 {% endblock %}

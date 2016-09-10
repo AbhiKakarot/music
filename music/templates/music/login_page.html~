@@ -1,4 +1,4 @@
-{% extends music/login_template.html %}
+{% extends 'music/login_template.html' %}
 {% block title %}Log In{% endblock %}
 {% block login_active %}active{% endblock %}
 

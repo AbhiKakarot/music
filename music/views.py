@@ -8,19 +8,20 @@ from .forms import UserForm,SongForm
 from .models import Album, Song
 
 
+def index(request):
+    if not request.user.is_authenticated():
+        return render(request, 'music/login_page.html')
+    else:
+        albums = Album.objects.all()
+        return render(request, 'music/index.html', {'all_albums': albums})
 
-class IndexView(generic.ListView):
-      template_name= 'music/index.html'
-      context_object_name='all_albums'
-      def get_queryset(self):
-          return Album.objects.all()
 
-class SongsView(generic.ListView):
-      template_name= 'music/music_list.html'
-      context_object_name='all_songs'
-      def get_queryset(self):
-          return Song.objects.all()
-
+def SongsView(request):
+    if not request.user.is_authenticated():
+        return render(request, 'music/login_page.html')
+    else:
+        return render(request, 'music/music_list.html')
+  
 class DetailView(generic.DetailView):
       model=Album
       template_name= 'music/detail.html'
@@ -118,7 +119,7 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 albums = Album.objects.all()
-                return render(request, 'music/index.html', {'all_albums':albums})
+                return render(request, 'music/index.html', {'all_albums':albums , 'username':username })
             else:
                 return render(request, 'music/login_page.html', {'error_message': 'Your account has been disabled'})
         else:
