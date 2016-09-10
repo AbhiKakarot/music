@@ -2,12 +2,12 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render,redirect,get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login , logout
 from django.views.generic import View
 from .forms import UserForm,SongForm
 from .models import Album, Song
 
-AUDIO_FILE_TYPES = ['wav', 'mp3', 'ogg']
+
 
 class IndexView(generic.ListView):
       template_name= 'music/index.html'
@@ -62,7 +62,9 @@ def create_song(request, album_id):
     }
     return render(request, 'music/song_form.html', context)
 
-
+class SongDelete(DeleteView):
+      model= Song
+      success_url = reverse_lazy('music:music_list')
 
 class UserFormView(View):
       form_class=UserForm
@@ -98,3 +100,27 @@ class UserFormView(View):
                    return redirect('music:index')
           return render(request, self.template_name, {'form': form})
       
+def logout_user(request):
+    logout(request)
+    form = UserForm(request.POST or None)
+    context = {
+        "form": form,
+    }
+    return render(request, 'music/login_page.html', context)
+
+
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                albums = Album.objects.all()
+                return render(request, 'music/index.html', {'all_albums':albums})
+            else:
+                return render(request, 'music/login_page.html', {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, 'music/login_page.html', {'error_message': 'Invalid login'})
+    return render(request, 'music/login_page.html')

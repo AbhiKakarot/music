@@ -4,7 +4,7 @@
 <meta charset="UTF=8">
 <title>{% block title %}Abhishek{% endblock %}</title>
 {% load staticfiles %}
-<!--link rel="shortcut icon" type="image/png" href="{%  static 'favicon.png' %}"/-->
+<link rel="shortcut icon" type="image/png" href="{%  static 'favicon.png' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'music/bootstrap-3.3.5-dist/css/bootstrap.min.css' %}" />
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Satisfy" />
 <link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}" />
@@ -54,7 +54,7 @@
      </a>
   </li>
   <li class="">
-     <a href="#">
+     <a href="{% url 'music:logout_user' %}">
         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp;Logout
      </a>
   </li>
