@@ -20,7 +20,8 @@ def SongsView(request):
     if not request.user.is_authenticated():
         return render(request, 'music/login_page.html')
     else:
-        return render(request, 'music/music_list.html')
+        all_songs = Song.objects.all()
+        return render(request, 'music/music_list.html',{'all_songs':all_songs})
   
 class DetailView(generic.DetailView):
       model=Album
